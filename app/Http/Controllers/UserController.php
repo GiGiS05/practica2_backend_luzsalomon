@@ -13,9 +13,19 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $users = User::query()
+        ->when($request->has('username'), 
+            fn ($query)=>$query->where('username', 'like', '%'. $request->input('username').'%'))
+        
+            ->when($request->has('email'), 
+            fn ($query)=>$query->where('email', 'like', '%'. $request->input('email').'%'))
+        
+        ->get();        
+        
+        return UserResource::collection($users);
+        
     }
 
     /**
@@ -37,7 +47,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return $user;
     }
 
     /**
