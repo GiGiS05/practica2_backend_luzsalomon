@@ -21,7 +21,10 @@ class UserController extends Controller
         
             ->when($request->has('email'), 
             fn ($query)=>$query->where('email', 'like', '%'. $request->input('email').'%'))
-        
+
+            ->when($request->query('trashed')==='true',function($query){
+                $query->onlyTrashed();
+            })
         ->get();        
         
         return UserResource::collection($users);
@@ -71,5 +74,14 @@ class UserController extends Controller
         $user->delete();
         //Returning 204 no content response for a successful deletion is a standard practice
         return response()->noContent();
+    }
+
+    public function restore($id){
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->restore();
+        return response()->json([
+            "message"=>"Usuario restaurado correctamente."
+        ]);
+
     }
 }

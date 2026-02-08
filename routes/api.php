@@ -10,4 +10,6 @@ Route::group(['prefix' => 'v1'], function () {
     Route::put('/users/{user}', [UserController::class,'update']);
     Route::patch('/users/{user}',[UserController::class,'update']);
     Route::delete('/users/{user}', [UserController::class,'destroy']);
+    //soft delete
+    Route::post('/users/{id}/restore', [UserController::class, 'restore']);
 });
