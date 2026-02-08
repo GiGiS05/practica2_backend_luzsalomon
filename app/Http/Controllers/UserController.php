@@ -53,9 +53,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(StoreUserRequest $request, User $user)
     {
-        //
+        $user->update($request->validated());
+        return UserResource::make($user);
     }
 
     /**

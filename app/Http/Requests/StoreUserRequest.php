@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+//use Illuminate\Validation\Rule;
 class StoreUserRequest extends FormRequest
 {
     /**
@@ -25,7 +25,9 @@ class StoreUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email', 'unique:users,email',
+            //Rule::unique('users')->ignore($this->route('user')),//<-Makes the program ignore when the user is being updated so that the unique check doesn't fail.
+            ],
         ];
     }
 }
