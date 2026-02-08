@@ -64,6 +64,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        //Returning 204 no content response for a successful deletion is a standard practice
+        return response()->noContent();
     }
 }
