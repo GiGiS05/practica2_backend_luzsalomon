@@ -30,6 +30,11 @@ class StoreUserRequest extends FormRequest
             'email' => [$isPatch?'sometimes':'required', 'email', 'unique:users,email',
             //Rule::unique('users')->ignore($this->route('user')),//<-Makes the program ignore when the user is being updated so that the unique check doesn't fail.
             ],
+            //new validations
+            'dui'=>[$isPatch?'sometimes':'required','string','regex:/^[0-9]{8}-[0-9]{1}$/', 'unique:users,dui'],
+            'birth_date'=>[$isPatch?'sometimes':'required','date','before:today'],
+            'phone_number'=>['nullable','string','regex:/^[6-7]{1}[0-9]{3}-[0-9]{4}$/','unique:users,phone_number'],
+            'hiring_date'=>['sometimes','date']
         ];
     }
 }

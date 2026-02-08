@@ -36,6 +36,10 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = Str::random(8); // Le colocamos una contraseña por defecto
 
+        if (!isset($data['hiring_date'])){
+            $date['hiring_date']=now();
+        }
+
         $user = User::create($data);
         
         return response()->json(UserResource::make($user), 201);
@@ -47,7 +51,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $user;
+        return UserResource::make($user);
     }
 
     /**

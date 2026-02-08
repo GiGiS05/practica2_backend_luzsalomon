@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('lastname')->after('name');
-            $table->string('username')->unique()->after('lastname');
+            $table->string('dui')->unique()->after('lastname');
+            $table->date('birth_date')->after('dui');
+            $table->string('phone_number')->unique()->nullable()->after('email');
+            $table->date('hiring_date')->after('phone_number');  
         });
-    } 
+    }
 
     /**
      * Reverse the migrations.
@@ -23,9 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('lastname');
-            $table->dropColumn('username');
-
+            $table->dropColumn('dui');
+            $table->dropColumn('phone_number');
+            $table->dropColumn('birth_date');
+            $table->dropColumn('hiring_date');
         });
     }
 };
